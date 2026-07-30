@@ -1,0 +1,95 @@
+Method 1️⃣: Brute Force
+Idea
+We calculate the altitude for every point from scratch.
+For each index i, we recompute the sum of all previous gains 0 → i-1.
+Then we track the maximum altitude.
+
+This is very direct but inefficient because we repeat the same work again and again.
+
+Approach
+Step 1: Understand starting point
+We start at altitude = 0
+There are n + 1 points total
+
+Step 2: Compute altitude for each point
+For every index i (from 0 to n):
+
+Set alt = 0
+Go back from 0 → i-1
+Add all values of gain[j]
+This gives altitude at point i
+
+Step 3: Track maximum altitude
+After calculating altitude for point i
+Compare it with current maximum
+Update maximum if needed
+
+Step 4: Repeat for all points
+Do this for all i = 0 → n
+Final answer is the highest altitude seen
+
+Why it works
+Every point is independently calculated using the definition:
+
+altitude[i] = sum of gain[0 → i-1]
+
+So correctness is guaranteed, but efficiency is not.
+
+CODE:
+class Solution {
+    public int largestAltitude(int[] gain) {
+        int n = gain.length;
+        int mx = 0;
+
+        for (int i = 0; i <= n; i++) {
+            int alt = 0;
+            for (int j = 0; j < i; j++) {
+                alt += gain[j];
+            }
+            mx = Math.max(mx, alt);
+        }
+
+        return mx;
+    }
+}
+Time Complexity: O(n²) (nested loops)
+Space Complexity: O(1)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+Method 2️⃣: Prefix Sum Array
+
+class Solution {
+    public int largestAltitude(int[] gain) {
+        int n = gain.length;
+        int[] alt = new int[n + 1];
+
+        for (int i = 0; i < n; i++) {
+            alt[i + 1] = alt[i] + gain[i];
+        }
+
+        int mx = 0;
+        for (int x : alt) {
+            mx = Math.max(mx, x);
+        }
+
+        return mx;
+    }
+}
+Time Complexity: O(n) 
+Space Complexity: O(n)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+✔Method 3️⃣: Optimal Running Sum
+class Solution {
+    public int largestAltitude(int[] gain) {
+        int maxAltitude = 0;
+        int currentAltitude = 0;
+        
+        for (int i = 0; i < gain.length; i++) {
+            currentAltitude += gain[i];
+            maxAltitude = Math.max(maxAltitude, currentAltitude);
+        }
+        
+        return maxAltitude;
+    }
+}
+Time Complexity: O(n) 
+Space Complexity: O(1)
