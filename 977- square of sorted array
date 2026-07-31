@@ -1,0 +1,67 @@
+METHOD-1)- BRUTE FORCE APPROACH
+import java.util.Arrays;
+
+class Solution {
+    public int[] sortedSquares(int[] nums) {
+
+        for (int i = 0; i < nums.length; i++) {
+            nums[i] = nums[i] * nums[i];
+        }
+
+        Arrays.sort(nums);
+
+        return nums;
+    }
+}
+
+OR 
+
+import java.util.Arrays;
+
+class Solution {
+    public int[] sortedSquares(int[] nums) {
+
+        int n = nums.length;
+        int[] arr = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            arr[i] = nums[i] * nums[i];
+        }
+
+        Arrays.sort(arr);
+
+        return arr;
+    }
+}
+
+TIME COMPLEXITY-O(N^2)
+SPACE COMPLEXITY- O(N) OR O(1)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+METHOD-2)- OPTIMAL APPROACH- TWO POINTER
+class Solution {
+    public int[] sortedSquares(int[] nums) {
+        int n= nums.length;
+        int[] ans= new int[n];
+        int i=0;
+        int j=n-1;
+        int p=n-1;
+        while(i<=j){
+            int L=nums[i]*nums[i];
+            int R=nums[j]*nums[j];
+            if(L>R){
+                ans[p--]=L;
+                i++;
+            }
+            else{
+                ans[p--]=R;
+                j--;
+            }
+            
+
+        }
+        return ans;
+        
+    }
+}
+TIME COMPLEXITY= O(N)
+SPACE COMPLEXITY= O(1)
